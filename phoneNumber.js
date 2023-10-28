@@ -4,7 +4,12 @@
 // '206-333-4444'
 // '206 333 4444'
 // Returns true if valid, false if not valid
+function testPhoneNumber(phoneNumber){
+    phoneNumber = phoneNumber.match(/\d{3}-\d{3}-\d{4}|[(]\d{3}[)]\s?\d{3}-\d{4}|\d{3}\s\d{3}\s\d{4}/g)
 
+    return phoneNumber !== null
+
+}
 
 
 // Explanation of RegExp
@@ -18,7 +23,7 @@
 // \d{4}  exactly 4 digit characters
 // $      end of line
 
-// check testPhoneNumber
+//check testPhoneNumber
 console.log(testPhoneNumber('(206) 333-4444')); // should return true
 console.log(testPhoneNumber('(206) 33-4444')); // should return false, missing a digit
 
@@ -30,11 +35,26 @@ console.log(testPhoneNumber('(206) 33-4444')); // should return false, missing a
 // the phone number.
 // Returns an object in the format {areaCode, phoneNumber}
 
+function parsePhoneNumber(phoneNumber){
+  const phoneRegx = /(\d{3})-\d{3}-\d{4}|[(](\d{3})[)]\s?\d{3}-\d{4}|(\d{3})\s\d{3}\s\d{4}/g
 
+ let phoneResult = phoneRegx.exec(phoneNumber).slice(1)
+ let code = null 
+ phoneResult.forEach((item) => {
+if (item){
+   code = item 
+   return
+} 
+ })
+let strip = /[^- ()]+/g
+const filter = phoneNumber.match(strip)
+    return {areaCode: code, phoneNumber:`${filter[1]}${filter[2]}` }
+
+}
 
 // Check parsePhoneNumber
 console.log(parsePhoneNumber('206-333-4444'));
-// returns {areaCode: '206', phoneNumber: '3334444'}
+// return {areaCode: '206', phoneNumber: '3334444'}
 
 console.log(parsePhoneNumber('(222) 422-5353'));
-// returns {areaCode: '222', phoneNumber: '4225353'}
+//returns {areaCode: '222', phoneNumber: '4225353'}
