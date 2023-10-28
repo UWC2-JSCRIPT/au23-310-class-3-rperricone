@@ -4,6 +4,9 @@
 // function should log each item to the console and log a total price
 function logReceipt (...items){
   let total = 0
+  let coloradoFoodDrinkTax = 4.00 * .01
+  let takeOutTotal = total + coloradoFoodDrinkTax
+  
   items.forEach((item)=> {
     total += item.price
     console.log(item.descr, item.price)
